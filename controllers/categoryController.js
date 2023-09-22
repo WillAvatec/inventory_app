@@ -1,6 +1,5 @@
 const asyncHand = require("express-async-handler");
 const Category = require("../models/category");
-const Item = require("../models/item");
 
 const { body, validationResult } = require("express-validator");
 
