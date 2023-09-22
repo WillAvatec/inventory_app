@@ -111,6 +111,7 @@ exports.category_delete_get = asyncHand(async (req, res, next) => {
     const err = new Error("Category not found.");
     err.status = 404;
     next(err);
+    return;
   }
 
   res.render("category_delete", {
