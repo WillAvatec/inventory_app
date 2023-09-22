@@ -28,6 +28,9 @@ const ItemSchema = new Schema({
   image: {
     type: String,
   },
+  protected: {
+    type: Boolean,
+  },
 });
 
 // Virtual to get URl

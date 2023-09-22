@@ -10,6 +10,9 @@ const CategorySchema = new Schema({
   description: {
     type: String,
   },
+  protected: {
+    type: Boolean,
+  },
 });
 
 // Virtual to get URL
