@@ -49,9 +49,9 @@ exports.category_create_post = [
     .withMessage("Name must be alphabetic letters only."),
   body("description")
     .trim()
-    .isLength({ max: 200 })
+    .isLength({ max: 500 })
     .escape()
-    .withMessage("Description can only be up to 200 characters"),
+    .withMessage("Description can only be up to 500 characters"),
 
   // Process request after validation and sanitization.
   asyncHand(async (req, res, next) => {
