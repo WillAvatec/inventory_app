@@ -1,5 +1,6 @@
 const asyncHand = require("express-async-handler");
 const Category = require("../models/category");
+const Item = require("../models/item");
 
 const { body, validationResult } = require("express-validator");
 
@@ -95,3 +96,49 @@ exports.category_create_post = [
     }
   }),
 ];
+
+/* DELETE EXISTING CATEGORY */
+
+// GET: Display confirmation page to remove category
+exports.category_delete_get = asyncHand(async (req, res, next) => {
+  // Recover all data from category
+  const [category, allRelatedItems] = await Promise.all([
+    Category.findById(req.params.id).exec(),
+    Item.find({ author: req.params.id }, "name").exec(),
+  ]);
+
+  if (category === null) {
+    const err = new Error("Category not found.");
+    err.status = 404;
+    next(err);
+  }
+
+  res.render("category_delete", {
+    categoryItems: allRelatedItems,
+    title: `Delete category ${category.name}`,
+    category,
+  });
+});
+
+// POST:_Handle remove category request
+exports.category_delete_post = asyncHand(async (req, res, next) => {
+  // Recover all data from category
+  const [category, allRelatedItems] = await Promise.all([
+    Category.findById(req.params.id).exec(),
+    Item.find({ author: req.params.id }, "name").exec(),
+  ]);
+
+  //Check if there are items using that category
+  if (allRelatedItems.length > 0) {
+    res.render("category_delete", {
+      categoryItems: allRelatedItems,
+      title: `Delete category ${category.name}`,
+      category,
+    });
+    return;
+  } else {
+    // Category has no items using it, delete it
+    await Category.findByIdAndRemove(req.body.id);
+    res.redirect("/catalog/category");
+  }
+});
