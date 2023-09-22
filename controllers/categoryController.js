@@ -142,3 +142,74 @@ exports.category_delete_post = asyncHand(async (req, res, next) => {
     res.redirect("/catalog/category");
   }
 });
+
+/* UPDATE EXISTING CATEGORY */
+
+// GET: Display form with actual data from the category
+exports.category_update_get = asyncHand(async (req, res, next) => {
+  // Recover category data from db to display on form
+  const category = await Category.findById(req.params.id).exec();
+
+  if (category === null) {
+    // There is no category with that ID in db
+    const err = new Error("Category not found");
+    err.status = 404;
+    next(err);
+  }
+
+  res.render("category_form", {
+    title: `Update category ${category.name}`,
+    category,
+  });
+});
+
+// POST: Handle category update
+exports.category_update_post = [
+  // Validate and sanitize fields
+  body("name", "Name field must not be empty.")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body("description")
+    .trim()
+    .escape()
+    .isLength({ min: 1 })
+    .withMessage("Description must not be empty.")
+    .isLength({ max: 500 })
+    .withMessage("Description can only be up to 500 characters."),
+
+  // Process update request
+  asyncHandler(async (req, res, next) => {
+    // Extracts errors from request if any
+    const errors = validationResult(req);
+
+    // Destructure properties from request body
+    const { name, description } = req.body;
+
+    // Create a new category with sanitized data
+    const category = new Category({
+      name,
+      description,
+      _id: req.params.id, // Assign old id
+    });
+
+    if (!errors.isEmpty()) {
+      res.render("category_form", {
+        title: `Update category: ${name}`,
+        category,
+        errors: errors.array(),
+      });
+      return;
+    } else {
+      //Data is valid, update the document
+      const updatedCategory = await Category.findByIdAndUpdate(
+        req.params.id,
+        category,
+        {} // No options required
+      );
+
+      //Redirect to updated cateogry detail
+      res.redirect(updatedCategory.url);
+    }
+  }),
+];
