@@ -17,6 +17,13 @@ exports.item_detail = asyncHand(async (req, res, next) => {
   //Get item from db
   const item = await Item.findById(req.params.id);
 
+  // Raise a 404 if item wasnt found in db
+  if (item === null) {
+    const err = new Error("Item wasn't found");
+    err.status = 404;
+    return next(err);
+  }
+
   res.render("item_detail", {
     title: `Item Detail: ${item.name}`,
     item,
