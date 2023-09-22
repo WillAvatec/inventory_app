@@ -31,3 +31,71 @@ exports.item_detail = asyncHand(async (req, res, next) => {
     item,
   });
 });
+
+/* CREATE NEW ITEM */
+
+// GET: Return item form
+exports.item_create_get = asyncHand(async (req, res) => {
+  res.render("item_form", {
+    title: "Add new Item",
+  });
+});
+
+//POST: Handle post request
+exports.item_create_post = [
+  //Convert categories into an array
+  function (req, res, next) {
+    if (!(req.body.category instanceof Array)) {
+      if (typeof req.body.category === "undefined") req.body.category = [];
+      else req.body.category = new Array(req.body.category);
+    }
+
+    next();
+  },
+
+  // Sanitize request data
+  body("name")
+    .trim()
+    .isLength({ min: 1 })
+    .escape()
+    .withMessage("Name field must not be empty."),
+  body("description").optional({ values: "falsy" }).trim().escape(),
+  body("price")
+    .trim()
+    .optional({ checkFalsy: true })
+    .isNumeric()
+    .withMessage("Price must be a number"),
+  body("stock").trim().isNumeric().withMessage("Stock must be a number"),
+  body("image").optional({ values: "falsy" }).trim().escape(),
+  body("category.*").escape(),
+
+  //Process sanitized data
+  asyncHand(async (req, res, next) => {
+    const errors = validationResult(req);
+
+    const newItem = new Item({ ...req.body }); // TODO: Check if it works
+
+    if (!errors.isEmpty()) {
+      res.render("item_form", {
+        title: "Create a new Item",
+        item: newItem,
+        errors: errors.array(),
+      });
+
+      return;
+    } else {
+      //Check if item already exists first
+      const itemExists = Item.findOne({ name: req.body.name })
+        .collation({ locale: "en", strength: 2 })
+        .exec();
+
+      if (itemExists) {
+        // Redirect to the detail page of the item
+        res.redirect(itemExists.url);
+      } else {
+        await newItem.save();
+        res.redirect(newItem.url);
+      }
+    }
+  }),
+];
