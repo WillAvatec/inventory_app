@@ -3,6 +3,8 @@ const Item = require("../models/item");
 
 const { body, validationResult } = require("express-validator");
 
+/* SHOW ITEMS */
+
 // Display all items
 exports.item_list = asyncHand(async (req, res) => {
   const allItems = await Item.find().exec();
