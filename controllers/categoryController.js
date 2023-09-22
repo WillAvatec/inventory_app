@@ -3,6 +3,8 @@ const Category = require("../models/category");
 
 const { body, validationResult } = require("express-validator");
 
+/* SHOW CATEGORIES */
+
 // Display all categories
 exports.category_list = asyncHand(async (req, res) => {
   const allCategories = await Category.find().exec();
@@ -29,6 +31,8 @@ exports.category_detail = asyncHand(async (req, res, next) => {
     category,
   });
 });
+
+/* CREATE NEW CATEGORY */
 
 // GET: Display form to create new category
 exports.category_create_get = asyncHand(async (req, res) => {
