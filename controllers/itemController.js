@@ -104,8 +104,8 @@ exports.item_create_post = [
 
 // GET: Display confirmation page to remove item
 exports.item_delete_get = asyncHand(async (req, res, next) => {
-  // Recover all data from category
-  const item = await Item.find({ author: req.params.id }, "name").exec();
+  // Recover item from db
+  const item = await Item.findByID(req.params.id).exec();
 
   if (item === null) {
     const err = new Error("Item not found.");
