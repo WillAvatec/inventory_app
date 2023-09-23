@@ -119,3 +119,19 @@ exports.item_delete_get = asyncHand(async (req, res, next) => {
     item,
   });
 });
+
+//POST: Handle request to delete
+exports.item_delete_post = asyncHand(async (req, res, next) => {
+  //Recover item from db
+  const item = await Item.findById(req.params.id).exec();
+
+  if (item === null) {
+    const err = new Error("Item not found.");
+    err.status = 404;
+    next(err);
+    return;
+  }
+
+  await Item.findByIdAndDelete(req.params.id);
+  res.redirect("/catalog/item");
+});
