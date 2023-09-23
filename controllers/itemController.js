@@ -99,3 +99,23 @@ exports.item_create_post = [
     }
   }),
 ];
+
+/* DELETING EXISTING ITEM */
+
+// GET: Display confirmation page to remove item
+exports.item_delete_get = asyncHand(async (req, res, next) => {
+  // Recover all data from category
+  const item = await Item.find({ author: req.params.id }, "name").exec();
+
+  if (item === null) {
+    const err = new Error("Item not found.");
+    err.status = 404;
+    next(err);
+    return;
+  }
+
+  res.render("item_delete", {
+    title: `Delete item ${item.name}`,
+    item,
+  });
+});
