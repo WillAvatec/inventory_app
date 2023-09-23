@@ -126,9 +126,7 @@ exports.item_delete_post = asyncHand(async (req, res, next) => {
   const item = await Item.findById(req.params.id).exec();
 
   if (item === null) {
-    const err = new Error("Item not found.");
-    err.status = 404;
-    next(err);
+    res.redirect("/catalog/item");
     return;
   }
 
