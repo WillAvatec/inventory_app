@@ -104,7 +104,7 @@ exports.category_delete_get = asyncHand(async (req, res, next) => {
   // Recover all data from category
   const [category, allRelatedItems] = await Promise.all([
     Category.findById(req.params.id).exec(),
-    Item.find({ author: req.params.id }, "name").exec(),
+    Item.find({ category: req.params.id }, "name").exec(),
   ]);
 
   if (category === null) {
@@ -126,7 +126,7 @@ exports.category_delete_post = asyncHand(async (req, res, next) => {
   // Recover all data from category
   const [category, allRelatedItems] = await Promise.all([
     Category.findById(req.params.id).exec(),
-    Item.find({ author: req.params.id }, "name").exec(),
+    Item.find({ category: req.params.id }, "name").exec(),
   ]);
 
   //Check if there are items using that category
