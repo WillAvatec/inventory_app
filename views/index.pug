@@ -1,5 +1,12 @@
 extends layout
-
 block content
-  h1= title
-  p Welcome to #{title}
+    h1= title
+    p Welcome to #{title}
+    //- Item design
+    .row
+        .row-left
+            .img-container
+            .item-description
+        .row-right
+            .retail-price
+            .wholesale-price
