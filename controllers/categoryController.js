@@ -180,7 +180,7 @@ exports.category_update_post = [
     .withMessage("Description can only be up to 500 characters."),
 
   // Process update request
-  asyncHandler(async (req, res, next) => {
+  asyncHand(async (req, res, next) => {
     // Extracts errors from request if any
     const errors = validationResult(req);
 
