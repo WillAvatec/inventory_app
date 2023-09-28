@@ -160,9 +160,9 @@ async function itemCreate(
   img
 ) {
   const itemDetail = {
+    image: img,
     name,
     category,
-    img,
     description,
     price,
     stock,
