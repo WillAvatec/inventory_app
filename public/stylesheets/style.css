@@ -1,8 +1,32 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  display: flex;
 }
 
 a {
-  color: #00B7FF;
+  color: #00b7ff;
+}
+
+.items-list {
+  margin-left: auto;
+  margin-right: 3rem;
+}
+
+.row,
+.row-left,
+.row-right {
+  display: flex;
+  flex-direction: row;
+  gap: 7px;
+}
+
+.row {
+  margin-bottom: 12px;
+  border-bottom: 3px solid #ddd;
+}
+
+img {
+  width: 100px;
+  height: auto;
 }
