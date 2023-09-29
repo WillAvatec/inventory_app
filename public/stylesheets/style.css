@@ -1,16 +1,95 @@
 body {
-  padding: 50px;
+  margin: 0;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   display: flex;
 }
 
 a {
-  color: #00b7ff;
+  color: white;
+  text-decoration: none;
 }
 
+/* Sidebar Menu */
+
+aside {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: clamp(120px, 40%, 300px);
+  height: 200vh;
+  background-color: rgb(8, 38, 58);
+  color: white;
+}
+
+.side-wrapper {
+  margin: 0 1.3rem;
+  position: absolute;
+  inset: 0;
+}
+
+.fixed {
+  position: fixed;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.side-wrapper h1 {
+  border-bottom: 1px solid #d4d4d4a9;
+}
+
+.side-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  gap: 20px;
+}
+
+.link {
+  display: flex;
+  gap: 1rem;
+  padding: 6px 10px;
+}
+
+/* Links Icons*/
+
+.link::before {
+  content: "";
+  display: inline-block;
+  background-size: cover;
+  filter: brightness(0) invert(1);
+  width: 1rem;
+  height: 1rem;
+}
+
+.link-items::before {
+  background-image: url("/images/grid.png");
+}
+
+.link-categories::before {
+  background-image: url("/images/category.png");
+}
+
+.link-newItem::before,
+.link-newCategory::before {
+  background-image: url("/images/add.png");
+}
+
+/* Icons Attribution */
+.icons-attribution {
+  margin-top: auto;
+}
+
+.icons-attribution a {
+  color: yellow;
+  font-size: 1rem;
+}
+
+/* Items List */
+
 .items-list {
-  margin-left: auto;
-  margin-right: 3rem;
+  margin: 2rem;
 }
 
 .row,
@@ -18,11 +97,11 @@ a {
 .row-right {
   display: flex;
   flex-direction: row;
-  gap: 7px;
+  gap: 35px;
 }
 
 .row {
-  margin-bottom: 12px;
+  margin-bottom: 25px;
   border-bottom: 3px solid #ddd;
 }
 
