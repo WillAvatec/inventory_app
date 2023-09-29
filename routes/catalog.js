@@ -32,10 +32,11 @@ router.post("/item/:id/delete", itemController.item_delete_post);
 router.get("/category/create", categoryController.category_create_get);
 router.post("/category/create", categoryController.category_create_post);
 
-// Display a category
-router.get("/category/:id", categoryController.category_detail);
 // Display list of categories
 router.get("/category/list", categoryController.category_list);
+
+// Display a category
+router.get("/category/:id", categoryController.category_detail);
 
 // Update a category
 router.get("/category/:id/update", categoryController.category_update_get);
