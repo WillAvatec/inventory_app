@@ -5,4 +5,21 @@ html
         link(rel='stylesheet' href='/stylesheets/style.css')
         meta(name="viewport" content="width=device-width, initial-scale=1")
     body
+        aside
+            .side-wrapper
+                .fixed
+                    h1 Inventor
+                    nav
+                        ul.side-links
+                            li
+                                a.link.link-items(href="/catalog") All Items
+                            li 
+                                a.link.link-categories(href="/catalog/category/list") All Categories
+                            li
+                                a.link.link-newItem(href="/catalog/item/create") Add a new Item
+                            li
+                                a.link.link-newCategory(href="/catalog/category/create") Add a new Category
+                        .icons-attribution
+                            p Icons gathered from #[a(href="https://www.flaticon.com/") Flaticon ]
+        block error 
         block content
