@@ -15,7 +15,7 @@ aside {
   display: flex;
   flex-direction: column;
   position: relative;
-  width: clamp(120px, 40%, 300px);
+  width: clamp(300px, 24rem, 380px);
   height: 200vh;
   background-color: rgb(8, 38, 58);
   color: white;
@@ -108,4 +108,22 @@ aside {
 img {
   width: 100px;
   height: auto;
+}
+
+/* Category List */
+
+.category-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 2.4rem;
+}
+
+.category {
+  border-radius: 8px;
+  padding: 1rem;
+  max-height: 300px;
+  box-shadow: rgba(99, 99, 99, 0.7) 0px 2px 8px 0px;
+  -webkit-box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  -moz-box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }

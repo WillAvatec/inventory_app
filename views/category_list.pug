@@ -1,0 +1,7 @@
+extends layout
+block content
+    .category-list
+        each cat in categories
+            article.category
+                h2 #{cat.name}
+                p.cat-description #{cat.description}
