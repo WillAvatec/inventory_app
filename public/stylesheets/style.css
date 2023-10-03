@@ -16,7 +16,7 @@ aside {
   flex-direction: column;
   position: relative;
   width: clamp(300px, 24rem, 380px);
-  height: 200vh;
+  height: 100vh;
   background-color: rgb(8, 38, 58);
   color: white;
 }
@@ -126,4 +126,84 @@ img {
   box-shadow: rgba(99, 99, 99, 0.7) 0px 2px 8px 0px;
   -webkit-box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   -moz-box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+/* Item Form */
+.main-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  margin-bottom: 6rem;
+  gap: 1.4rem;
+}
+
+.main-content form {
+  display: flex;
+  flex-direction: row;
+  gap: 2.7rem;
+}
+
+.main-content h1 {
+  font-size: 34px;
+  font-weight: 400;
+}
+
+.ipt-wrap {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.8rem;
+  gap: 0.6rem;
+}
+
+.ipt-wrap label {
+  font-size: 1.215rem;
+}
+
+.ipt-wrap label {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.215rem;
+}
+
+#price-item,
+#stock {
+  max-height: 25px;
+}
+
+.item-image-container {
+  width: 500px;
+  height: 500px;
+  border: 2px dotted black;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  padding: 0.7rem;
+}
+
+.item-image-container p {
+  position: absolute;
+  top: 40%;
+  font-size: 2rem;
+}
+
+.item-image-container input {
+  display: none;
+}
+
+.item-image-container img {
+  flex: 1;
+  object-fit: contain;
+  width: 100%;
+  z-index: 1;
+}
+
+#item-submit {
+  padding: 5px;
+  max-width: 120px;
 }
