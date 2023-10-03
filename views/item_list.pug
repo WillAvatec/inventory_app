@@ -7,8 +7,9 @@ block content
                     .img-container
                         - let url = item.image 
                         img(src= url, alt=item.name)
+                        a(href= item.url)
                     .item-description
-                        h3 #{item.name}
+                        a(href=item.url) #[h3.item-name #{item.name}]
                         .description-details
                             //- #{item.category}
                             p CategoryTest
@@ -19,4 +20,4 @@ block content
                         p $#{item.price}
                     .wholesale-price
                         h4 Wholesale Price
-                        p $#{(item.price + (item.price * 0.2)).toFixed(2)}
+                        p $#{(item.price + (item.price * 0.2)).toFixed(2)} 

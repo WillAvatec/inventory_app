@@ -105,6 +105,22 @@ aside {
   border-bottom: 3px solid #ddd;
 }
 
+.img-container {
+  position: relative;
+}
+
+.img-container a {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.item-name {
+  color: black;
+  text-decoration: underline;
+  font-weight: 600;
+}
+
 img {
   width: 100px;
   height: auto;
