@@ -1,0 +1,8 @@
+extends layout
+block content
+    .main-content
+        h1 Do you really want to delete this item?
+        form(action="" method="post")
+            input(type="hidden" name="item_id" required="true" value=item._id)
+            button.btn-danger(type="submit") Yes, delete item
+            a.btn-update(href="/catalog") No
