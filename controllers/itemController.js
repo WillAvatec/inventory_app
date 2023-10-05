@@ -131,7 +131,7 @@ exports.item_delete_post = asyncHand(async (req, res, next) => {
   }
 
   await Item.findByIdAndDelete(req.params.id);
-  res.redirect("/catalog/item");
+  res.redirect("/catalog");
 });
 
 /* UPDATE EXISTING ITEM */
