@@ -7,7 +7,7 @@ block content
             else
                 img(src="/images/holder.webp" alt="placeholder")
         .detail-content
-            p.detail-category.low-m #{item.category[0]}
+            p.detail-category.low-m #{item.category[0].name}
             h1.low-m #{item.name}
             h2 #{"$"+ item.price.toFixed(2)}
             .detail-description
