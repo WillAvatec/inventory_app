@@ -82,7 +82,7 @@ exports.category_create_post = [
       return;
     } else {
       //Check if category already exists first
-      const categoryExists = Category.findOne({ name })
+      const categoryExists = await Category.findOne({ name })
         .collation({ locale: "en", strength: 2 })
         .exec();
 

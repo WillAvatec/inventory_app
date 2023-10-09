@@ -1,0 +1,14 @@
+extends layout 
+block content
+    .main-content
+        h1 Create Category
+        form#cat-form(ction="" method="post")
+            - let isCategory = undefined===category;
+            .ipt-wrap
+                label(for="name-cat") Name: 
+                input#name-cat(name="name" type="text" placeholder="Accesories, Colours, Models ..." required=true value=isCategory?"":category.name)
+            .ipt-wrap
+                label(for="description-cat") Description: 
+                textarea#description-cat(name="description" cols="35" rows="10" placeholder="This category tracks all the items that contain..." required="true") #{isCategory?"":category.description}
+            .ipt-wrap
+                button#submit Submit

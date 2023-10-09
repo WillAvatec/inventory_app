@@ -1,0 +1,21 @@
+extends layout
+block content
+    ul.items-list
+        each item in items
+            li.row
+                .row-left
+                    .img-container
+                        img(src=item.image||"/images/holder.webp", alt=item.name)
+                        a(href= item.url)
+                    .item-description
+                        a(href=item.url) #[h3.item-name #{item.name}]
+                        .description-details
+                            p #{item.category[0].name}
+                            p Stocked Product: #[span #{item.stock ? item.stock + " in stock" : "Exhausted" }]
+                .row-right
+                    .retail-price
+                        h4 Retail Price
+                        p $#{item.price}
+                    .wholesale-price
+                        h4 Wholesale Price
+                        p $#{(item.price + (item.price * 0.2)).toFixed(2)} 

@@ -1,0 +1,18 @@
+extends layout
+block content
+    .wrapper-content
+        .detail-image
+            if item.image
+                img(src=item.image alt=item.name)
+            else
+                img(src="/images/holder.webp" alt="placeholder")
+        .detail-content
+            p.detail-category.low-m #{item.category[0].name}
+            h1.low-m #{item.name}
+            h2 #{"$"+ item.price.toFixed(2)}
+            .detail-description
+                p #{item.description}
+            p.stock In stock: #[span #{item.stock}]
+            .control-buttons
+                a.btn-update(href=item.url + "/update") Update
+                a.btn-danger(href=item.url + "/delete") Delete

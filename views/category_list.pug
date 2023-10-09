@@ -1,0 +1,8 @@
+extends layout
+block content
+    .category-list
+        each cat in categories
+            article.category
+                a.cat-link(href=cat.url) 
+                h2 #{cat.name}
+                p.cat-description #{cat.description}

@@ -1,0 +1,10 @@
+extends layout
+block content
+    .wrapper-content
+        .detail-content
+            h1.low-m #{category.name}
+            .detail-description
+                p #{category.description}
+            .control-buttons
+                a.btn-update(href=category.url + "/update") Update
+                a.btn-danger(href=category.url + "/delete") Delete
