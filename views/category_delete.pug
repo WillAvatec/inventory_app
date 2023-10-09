@@ -1,0 +1,8 @@
+extends layout 
+block content 
+    .main-content
+        h1 Do you really want to delete this category?
+        form(action="" method="post")
+            input(type="hidden" name="category_id" required="true" value=category._id)
+            button.btn-danger(type="submit") Yes, delete it
+            a.btn-update(href="/catalog/category") No
