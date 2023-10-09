@@ -151,12 +151,19 @@ img {
 }
 
 .category {
+  position: relative;
   border-radius: 8px;
   padding: 1rem;
   max-height: 300px;
   box-shadow: rgba(99, 99, 99, 0.7) 0px 2px 8px 0px;
   -webkit-box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   -moz-box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.cat-link {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
 }
 
 /* Item Form */
@@ -190,9 +197,6 @@ img {
 
 .ipt-wrap label {
   font-size: 1.215rem;
-}
-
-.ipt-wrap label {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -236,7 +240,7 @@ img {
   z-index: 1;
 }
 
-#item-submit {
+#submit {
   padding: 5px;
   max-width: 120px;
 }
@@ -306,4 +310,10 @@ img {
   font-size: 20px;
   padding: 0.8rem 2.5rem;
   margin-right: 1rem;
+}
+
+/* Category form */
+#cat-form {
+  display: flex;
+  flex-direction: column;
 }
