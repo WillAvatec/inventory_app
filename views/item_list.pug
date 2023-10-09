@@ -5,14 +5,12 @@ block content
             li.row
                 .row-left
                     .img-container
-                        - let url = item.image 
-                        img(src= url, alt=item.name)
+                        img(src=item.image||"/images/holder.webp", alt=item.name)
                         a(href= item.url)
                     .item-description
                         a(href=item.url) #[h3.item-name #{item.name}]
                         .description-details
-                            //- #{item.category}
-                            p CategoryTest
+                            p #{item.category[0].name}
                             p Stocked Product: #[span #{item.stock ? item.stock + " in stock" : "Exhausted" }]
                 .row-right
                     .retail-price
