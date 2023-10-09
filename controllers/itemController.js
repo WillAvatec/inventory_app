@@ -1,5 +1,6 @@
 const asyncHand = require("express-async-handler");
 const Item = require("../models/item");
+const Category = require("../models/category");
 
 const { body, validationResult } = require("express-validator");
 
@@ -7,17 +8,21 @@ const { body, validationResult } = require("express-validator");
 
 // Display all items
 exports.item_list = asyncHand(async (req, res) => {
-  const allItems = await Item.find().exec();
+  const [allItems, allCategories] = await Promise.all([
+    Item.find().populate("category").sort({ createdAt: -1 }).exec(),
+    Category.find().exec(),
+  ]);
   res.render("item_list", {
     title: "Item List",
     items: allItems,
+    categories: allCategories,
   });
 });
 
 // Display detail info for one item
 exports.item_detail = asyncHand(async (req, res, next) => {
   //Get item from db
-  const item = await Item.findById(req.params.id);
+  const item = await Item.findById(req.params.id).populate("category").exec();
 
   // Raise a 404 if item wasnt found in db
   if (item === null) {
@@ -36,8 +41,11 @@ exports.item_detail = asyncHand(async (req, res, next) => {
 
 // GET: Return item form
 exports.item_create_get = asyncHand(async (req, res) => {
+  const allCategories = await Category.find().exec();
+
   res.render("item_form", {
     title: "Add new Item",
+    categories: allCategories,
   });
 });
 
@@ -73,7 +81,15 @@ exports.item_create_post = [
   asyncHand(async (req, res, next) => {
     const errors = validationResult(req);
 
-    const newItem = new Item({ ...req.body }); // TODO: Check if it works
+    const { name, description, price, stock, image, category } = req.body;
+    const newItem = new Item({
+      name,
+      description,
+      price,
+      stock,
+      image,
+      category,
+    });
 
     if (!errors.isEmpty()) {
       res.render("item_form", {
@@ -85,7 +101,7 @@ exports.item_create_post = [
       return;
     } else {
       //Check if item already exists first
-      const itemExists = Item.findOne({ name: req.body.name })
+      const itemExists = await Item.findOne({ name: req.body.name })
         .collation({ locale: "en", strength: 2 })
         .exec();
 
@@ -148,8 +164,11 @@ exports.item_update_get = asyncHand(async (req, res, next) => {
     return;
   }
 
+  const allCategories = await Category.find().exec();
+
   res.render("item_form", {
     title: `Update Item ${item.name}`,
+    categories: allCategories,
     item,
   });
 });
@@ -172,25 +191,40 @@ exports.item_update_post = [
     .isLength({ min: 1 })
     .escape()
     .withMessage("Name field must not be empty."),
-  body("description").optional({ values: "falsy" }).trim().escape(),
+  body("description").optional({ values: "falsy" }).trim(),
   body("price")
     .trim()
     .optional({ checkFalsy: true })
     .isNumeric()
     .withMessage("Price must be a number"),
-  body("stock").trim().isNumeric().withMessage("Stock must be a number"),
-  body("image").optional({ values: "falsy" }).trim().escape(),
+  body("stock", "Stock must be a positive number").isInt({ min: 0 }),
+  body("image").optional({ values: "falsy" }).trim(),
   body("category.*").escape(),
 
   //Process sanitized data
   asyncHand(async (req, res, next) => {
     const errors = validationResult(req);
-
-    const newItem = new Item({ ...req.body }); // TODO: Check if it works
+    console.log(req.body);
+    const newItem = new Item({
+      ...req.body,
+      _id: req.params.id,
+    });
 
     if (!errors.isEmpty()) {
+      const [allCategories, item] = Promise.all([
+        Category.find().exec(),
+        Item.findById(req.params.id).exec(),
+      ]);
+
+      for (const cat of allCategories) {
+        if (item.category.indexOf(cat._id) > -1) {
+          cat.selected = "true";
+        }
+      }
+
       res.render("item_form", {
         title: "Create a new Item",
+        categories: allCategories,
         item: newItem,
         errors: errors.array(),
       });
