@@ -2,26 +2,41 @@ extends layout
 block content
     .main-content
         h1 Create Item
-        form(action="" method="post")
+        form#item-form(action="" method="post")
             .item-details-form
                 .ipt-wrap
                     label(for="name-item") Name: 
-                    input#name-item(name="name" type="text" placeholder="Grinder, African coffee beans, ..." required)
+                    input#name-item(name="name" type="text" placeholder="Grinder, African coffee beans, ..." value=undefined===item?"":item.name)
                 .ipt-wrap
                     label(for="description-item") Description: 
-                    textarea#description-item(name="description" cols="20" rows="10" placeholder="This product is very important because..." required)
-                .ipt-wrap 
+                    textarea#description-item(name="description" cols="20" rows="10" placeholder="This product is very important because..." required="true") #{item===undefined?"":item.description}
+                .ipt-wrap
                     label(for="price-item")
                         p Price: 
-                        input#price-item(type="number" name="price" placeholder="99.99" required)
+                        input#price-item(type="number" name="price" placeholder="99.99" min=0 required="true" value=undefined===item?"":item.price)
+                .ipt-wrap
+                    label(for="category-item")
+                        select#category-item(name="category" form="item-form" required="true" placeholder="Select Category") 
+                            for cat in categories
+                                - let isSelected = item ?(cat._id.equals(item.category[0])) :false;
+                                if isSelected
+                                    option(value=cat._id selected) #{cat.name}
+                                else
+                                    option(value=cat._id) #{cat.name}
                 .ipt-wrap
                     label(for="stock")
                         p In Stock: 
-                        input#stock(type="number" placeholder="0")
+                        input#stock(type="number" name="stock" placeholder="0" min=0 value=undefined===item?"":item.stock)
                 .ipt-wrap
                     button#item-submit Submit
             label.item-image-container(for="img-item") 
                 p Upload an image here (PNG/JPG)
-                img(src="")
-                input#img-item.img-input(type="file" name="image" accept="image/png, image/jpeg")
+                img(src=undefined===item?"":item.image)
+                input#img-url(type="hidden" name="image" value=undefined===item?"":item.image)
+                input#img-item.img-input(type="file" accept="image/png, image/jpeg")
+        if errors
+            ul
+                each error in errors
+                    - console.log(error)
+                    li #{error.msg}
     script(src="/javascripts/displayImg.js") 
